@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanos y Salvos - Lista</title>
+</head>
+<body>
+    <h1>Mascotas Registradas - Sanos y Salvos</h1>
+    <hr>
+    <ul>
+        {% for mascota in mascotas %}
+            <li>
+                <strong>{{ mascota.nombre }}</strong> - {{ mascota.tipo }} ({{ mascota.raza }}) ({{ mascota.estado }})
+                <br>
+                <em>Ubicación:</em> {{ mascota.ubicacion }} 
+                <br>
+                <em>Contacto:</em> {{ mascota.datos_contacto }}
+                <hr>
+            </li>
+        {% empty %}
+            <li>No hay mascotas registradas actualmente.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
