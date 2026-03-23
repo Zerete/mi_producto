@@ -20,6 +20,7 @@ class Mascota(models.Model):
         ('PERDIDO', 'Perdido'),
         ('ENCONTRADO', 'Encontrado'),
     ]
+    foto = models.ImageField(upload_to='mascotas/', null=True, blank=True, verbose_name="Fotografía")
     nombre = models.CharField(max_length=100)
     estado = models.CharField(max_length=10, choices=ESTADO_CHOICES)
     raza = models.CharField(max_length=100)

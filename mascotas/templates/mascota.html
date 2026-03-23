@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +11,11 @@
     <ul>
         {% for mascota in mascotas %}
             <li>
+                {% if mascota.foto %}
+                    <img src="{{ mascota.foto.url }}" alt="{{ mascota.nombre }}" style="width: 200px; border-radius: 10px; margin-bottom: 10px;">
+                    <br>
+                {% endif %}
+                
                 <strong>{{ mascota.nombre }}</strong> - {{ mascota.tipo }} ({{ mascota.raza }}) ({{ mascota.estado }})
                 <br>
                 <em>Ubicación:</em> {{ mascota.ubicacion }} 
