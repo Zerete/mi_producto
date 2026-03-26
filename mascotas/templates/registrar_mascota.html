@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sanos y Salvos - Reportar Mascota</title>
+</head>
+<body>
+    <h1>Reportar  a la Mascota Perdida o Encontrada</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %} <p>Nombre: <input type="text" name="nombre" required></p>
+        
+        <p>Tipo: 
+            <select name="tipo">
+                <option value="PERRO">Perro</option>
+                <option value="GATO">Gato</option>
+                <option value="OTRO">Otro</option>
+            </select>
+        </p>
+
+        <p>Estado: 
+            <select name="estado">
+                <option value="PERDIDO">Perdido</option>
+                <option value="ENCONTRADO">Encontrado</option>
+            </select>
+        </p>
+
+        <p>Raza: <input type="text" name="raza" required></p>
+        <p>Color: <input type="text" name="color" required></p>
+        <p>Ubicación: <input type="text" name="ubicacion" required></p>
+        <p>Datos de Contacto y tipo de mascota: <textarea name="datos_contacto" required></textarea></p>
+        <p>Imagen de la mascota: <input type="file" name="foto"></p>
+
+        <button type="submit">Enviar</button>
+    </form>
+    <br>
+    <a href="{% url 'lista_mascota' %}">Volver a la lista</a>
+</body>
+</html>
