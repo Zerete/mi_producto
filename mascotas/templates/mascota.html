@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sanos y Salvos - Lista</title>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
+
+
 </head>
 <body>
     <h1>Mascotas Registradas - Sanos y Salvos</h1>
@@ -39,5 +43,7 @@
             <li>No hay mascotas registradas actualmente.</li>
         {% endfor %}
     </ul>
+    <div id='map' style='width: 100%; height: 400px; margin-bottom: 20px;'></div>
+    
 </body>
 </html>

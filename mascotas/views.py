@@ -27,7 +27,11 @@ def registrar_mascota(request):
             color=color,
             ubicacion=ubicacion,
             datos_contacto=datos_contacto,
-            foto=foto
+            foto=foto, 
+            vacunas = request.POST.get('vacunas') == 'on',
+            tiene_chip = request.POST.get('tiene_chip') == 'on',
+            latitud = request.POST.get('latitud'),
+            longitud = request.POST.get('longitud'),
         )
         messages.success(request, '¡Gracias! Tu reporte ha sido recibido y será revisado por nuestro equipo antes de publicarse🐾.')
         return redirect('lista_mascota')

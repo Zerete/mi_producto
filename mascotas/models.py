@@ -30,5 +30,11 @@ class Mascota(models.Model):
     datos_contacto = models.TextField() 
     publicado = models.BooleanField(default=False, verbose_name="¿Aprobado para publicar?")
 
+    vacunas = models.BooleanField(default=False, verbose_name="¿Vacunado?")
+    tiene_chip = models.BooleanField(default=False, verbose_name="¿Tiene Chip?")
+
+    latitud = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+    longitud = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+
     def __str__(self):
         return f"{self.nombre if self.nombre else 'Sin nombre'} - {self.estado}"
