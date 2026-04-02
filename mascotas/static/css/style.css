@@ -1,0 +1,136 @@
+:root {
+    --primary-color: #64da20;
+    --secondary-color: #2c3e50;
+    --background-color: #f4f7f6;
+    --text-color: #333;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    color: var(--secondary-color);
+    text-align: center;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: transform 0.2s;
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
+
+/* Grid de Mascotas */
+.mascotas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.badge {
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.perdido { background: #ff4757; color: white; }
+.encontrado { background: #2ed573; color: white; }
+
+/* Formulario */
+form {
+    max-width: 500px;
+    margin: 0 auto;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+/* mascotas/static/css/style.css */
+
+/* Layout */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+main {
+    flex: 1; /* Empuja el footer hacia abajo */
+    padding: 20px;
+}
+
+/* Header */
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+header a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Footer */
+footer {
+    background-color: #2c3e50;
+    color: #bdc3c7;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 40px;
+}
+
+.footer-content p {
+    margin: 5px 0;
+}

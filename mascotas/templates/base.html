@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sanos y Salvos{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <a href="{% url 'lista_mascota' %}">Sanos y Salvos</a>
+        </div>
+        <nav>
+            <a href="{% url 'lista_mascota' %}" style="margin-right: 15px;">Inicio</a>
+            <a href="{% url 'registrar_mascota' %}" class="btn">Reportar Mascota</a>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p><strong>Sanos y Salvos</strong> - Plataforma de Reporte de Mascotas</p>
+            <p>© 2026 </p>
+            <p>Santiago - Antonio Varas #666, Chile</p>
+        </div>
+    </footer>
+
+</body>
+</html>
