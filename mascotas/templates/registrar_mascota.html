@@ -1,48 +1,93 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Sanos y Salvos - Reportar</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
-    <h1>Reportar Mascota</h1>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <label>Nombre de la mascota:</label>
-        <input type="text" name="nombre" placeholder="Ej: Toby" required>
-        
-        <label>Tipo de animal:</label>
-        <select name="tipo">
-            <option value="PERRO">Perro</option>
-            <option value="GATO">Gato</option>
-            <option value="OTRO">Otro</option>
-        </select>
 
-        <label>Estado:</label>
-        <select name="estado">
-            <option value="PERDIDO">Perdido</option>
-            <option value="ENCONTRADO">Encontrado</option>
-        </select>
+{% block title %}Reportar Mascota - Sanos y Salvos{% endblock %}
 
-        <label>Raza:</label>
-        <input type="text" name="raza" required>
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow-lg border-0 rounded-4">
+            <div class="card-header bg-success text-white py-3 rounded-top-4">
+                <h2 class="h4 mb-0 text-center fw-bold">🐾 Reportar Mascota</h2>
+            </div>
+            <div class="card-body p-4">
+                <p class="text-muted text-center mb-4">Ingresa los datos para que nuestra comunidad pueda ayudar.</p>
+                
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-8">
+                            <label class="form-label fw-bold">Nombre de la mascota</label>
+                            <input type="text" name="nombre" class="form-control" placeholder=" nombre   " required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Tipo</label>
+                            <select name="tipo" class="form-select">
+                                <option value="PERRO">Perro</option>
+                                <option value="GATO">Gato</option>
+                                <option value="OTRO">Otro</option>
+                            </select>
+                        </div>
+                    </div>
 
-        <label>Ubicación:</label>
-        <input type="text" name="ubicacion" placeholder="Ej: Santiago" required>
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Estado</label>
+                            <select name="estado" class="form-select border-primary text-primary fw-bold">
+                                <option value="PERDIDO">Perdido 🔴</option>
+                                <option value="ENCONTRADO">Encontrado 🔵</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Raza</label>
+                            <input type="text" name="raza" class="form-control" placeholder="Ej: Poodle o Mestizo" required>
+                        </div>
+                    </div>
 
-        <label>Foto:</label>
-        <input type="file" name="foto">
+                    <div class="row mb-3 bg-light p-3 rounded-3 mx-1">
+                        <div class="col-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="vacunas" id="vacunas">
+                                <label class="form-check-label" for="vacunas">¿Está vacunado?</label>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="tiene_chip" id="chip">
+                                <label class="form-check-label" for="chip">¿Tiene Chip?</label>
+                            </div>
+                        </div>
+                    </div>
 
-        <label>Contacto:</label>
-        <textarea name="datos_contacto" rows="3" required></textarea>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Ubicación</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                            <input type="text" name="ubicacion" class="form-control" placeholder="   Ubicacion   #666" required>
+                        </div>
+                    </div>
 
-        <button type="submit" class="btn" style="width: 100%;">Enviar Reporte</button>
-    </form>
-    
-    <p style="text-align: center; margin-top: 20px;">
-        <a href="{% url 'lista_mascota' %}">⬅ Volver a la lista</a>
-    </p>
-</body>
-</html>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Imagen de la mascota</label>
+                        <input type="file" name="foto" class="form-control" accept="image/*">
+                        <div class="form-text text-success">Una buena foto ayuda  📸.</div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Contacto</label>
+                        <textarea name="datos_contacto" class="form-control" rows="3" placeholder="Ej: Teléfono +569... o Redes Sociales" required></textarea>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success btn-lg rounded-pill fw-bold shadow-sm">
+                            <i class="bi bi-send-fill me-2"></i>Enviar Reporte para Revisión
+                        </button>
+                        <a href="{% url 'lista_mascota' %}" class="btn btn-link text-muted">Cancelar y volver</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

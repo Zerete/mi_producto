@@ -1,8 +1,6 @@
 from django.db import models
 
-# Create your models here.
 class Mascota(models.Model):
-
     TIPO_CHOICES = [
         ('PERRO', 'Perro'),
         ('GATO', 'Gato'),
@@ -14,7 +12,6 @@ class Mascota(models.Model):
         default='PERRO',
         verbose_name="Tipo de Animal"
     )
-
 
     ESTADO_CHOICES = [
         ('PERDIDO', 'Perdido'),
@@ -29,12 +26,18 @@ class Mascota(models.Model):
     fecha_reporte = models.DateTimeField(auto_now_add=True) 
     datos_contacto = models.TextField() 
     publicado = models.BooleanField(default=False, verbose_name="¿Aprobado para publicar?")
-
     vacunas = models.BooleanField(default=False, verbose_name="¿Vacunado?")
     tiene_chip = models.BooleanField(default=False, verbose_name="¿Tiene Chip?")
 
-    latitud = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
-    longitud = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
-
     def __str__(self):
         return f"{self.nombre if self.nombre else 'Sin nombre'} - {self.estado}"
+
+class ReporteHallazgo(models.Model):
+    mascota = models.ForeignKey(Mascota, on_delete=models.CASCADE, related_name='hallazgos')
+    foto_evidencia = models.ImageField(upload_to='hallazgos/')
+    comentario = models.TextField()
+    fecha_reporte = models.DateTimeField(auto_now_add=True)
+    revisado = models.BooleanField(default=False, verbose_name="¿Es verídico?")
+
+    def __str__(self):
+        return f"Hallazgo para {self.mascota.nombre}"

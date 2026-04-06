@@ -3,28 +3,125 @@
 
 {% block title %}Inicio - Mascotas Registradas{% endblock %}
 
+{% block extra_head %}
+    <style>
+        .card-mascota { border: none; border-radius: 15px; transition: transform 0.3s, box-shadow 0.3s; }
+        .card-mascota:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important; }
+        .img-mascota { height: 250px; object-fit: cover; border-top-left-radius: 15px; border-top-right-radius: 15px; }
+        .bg-perdido { background-color: #dc3545; color: white; }
+        .bg-encontrado { background-color: #0d6efd; color: white; }
+        /* Estilo para el buscador */
+        .search-container { max-width: 600px; margin: 0 auto 40px auto; }
+    </style>
+{% endblock %}
+
 {% block content %}
-    <h1>Mascotas Encontradas y Perdidas</h1>
-    
-    <div class="mascotas-grid">
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold mb-3">Mascotas Encontradas y Perdidas</h1>
+        <p class="lead text-muted mx-auto" style="max-width: 700px;">Ayuda a que más mascotas vuelvan a sus hogares</p>
+        <hr class="w-25 mx-auto text-success" style="height: 3px;">
+    </div>
+
+    <div class="search-container">
+        <div class="input-group shadow-sm rounded-pill overflow-hidden">
+            <span class="input-group-text bg-white border-0"><i class="bi bi-search text-success"></i></span>
+            <input type="text" id="petSearch" class="form-control border-0 py-3" placeholder="Buscar ....">
+        </div>
+    </div>
+
+    <div class="row" id="petGrid">
         {% for mascota in mascotas %}
-            <div class="card">
-                {% if mascota.foto %}
-                    <img src="{{ mascota.foto.url }}" alt="{{ mascota.nombre }}">
-                {% else %}
-                    <img src="https://via.placeholder.com/300x200?text=Sin+Foto" alt="Sin foto">
+            <div class="col-md-6 col-lg-4 mb-4 pet-item">
+                <div class="card h-100 card-mascota shadow-sm">
+                    {% if mascota.foto %}
+                        <img src="{{ mascota.foto.url }}" class="card-img-top img-mascota" alt="{{ mascota.nombre }}">
+                    {% else %}
+                        <div class="bg-secondary text-white d-flex align-items-center justify-content-center img-mascota">
+                            <i class="bi bi-camera-fill display-1 opacity-25"></i>
+                        </div>
+                    {% endif %}
+                    
+                    <div class="card-body p-4 text-center">
+                        <div class="mb-3 text-start">
+                            <span class="badge rounded-pill shadow-sm {% if mascota.estado == 'PERDIDO' %}bg-perdido{% else %}bg-encontrado{% endif %}">
+                                {{ mascota.estado }}
+                            </span>
+                        </div>
+                        <h3 class="card-title fw-bold text-dark pet-name">{{ mascota.nombre|default:"Sin nombre" }}</h3>
+                        <p class="text-success fw-bold small mb-3 pet-info">{{ mascota.tipo }} • {{ mascota.raza }}</p>
+                        <p class="card-text text-muted small border-top pt-2"><i class="bi bi-geo-alt-fill text-danger me-1"></i>{{ mascota.ubicacion }}</p>
+                    </div>
+
+                    <div class="card-footer bg-white border-0 p-4 pt-0 text-center">
+                        <div class="p-3 bg-light rounded-3 d-flex align-items-center mb-3 text-start">
+                            <i class="bi bi-telephone-outbound-fill text-success me-3"></i>
+                            <strong class="text-dark">{{ mascota.datos_contacto }}</strong>
+                        </div>
+
+                        {% if mascota.estado == 'PERDIDO' %}
+                            <div class="d-grid">
+                                <button type="button" class="btn btn-primary btn-sm rounded-pill fw-bold shadow-sm py-2" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#confirmModal{{ mascota.id }}">
+                                    ¡Lo he encontrado!
+                                </button>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div> {% if mascota.estado == 'PERDIDO' %}
+                    <div class="modal fade" id="confirmModal{{ mascota.id }}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content border-0 shadow-lg rounded-4">
+                                <form action="{% url 'marcar_encontrado' mascota.id %}" method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="modal-header bg-primary text-white border-0">
+                                        <h5 class="modal-title fw-bold">Verificar Hallazgo para {{ mascota.nombre }}</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body p-4">
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold small">Foto de prueba</label>
+                                            <input type="file" name="foto_prueba" class="form-control" accept="image/*" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold small">Detalles del encuentro</label>
+                                            <textarea name="detalle_hallazgo" class="form-control" rows="3" placeholder="Ej: Lo encontré en la esquina..." required></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer border-0">
+                                        <button type="button" class="btn btn-light rounded-pill" data-bs-dismiss="modal">Cerrar</button>
+                                        <button type="submit" class="btn btn-primary rounded-pill fw-bold">Enviar Pruebas</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 {% endif %}
-                
-                <div class="card-body">
-                    <span class="badge {{ mascota.estado|lower }}">{{ mascota.estado }}</span>
-                    <h3>{{ mascota.nombre|default:"Sin nombre" }}</h3>
-                    <p><strong>Raza:</strong> {{ mascota.raza }}</p>
-                    <p>📍 {{ mascota.ubicacion }}</p>
-                    <p>📞 Contacto: {{ mascota.datos_contacto }}</p>
-                </div>
+            </div> {% empty %}
+            <div class="col-12 text-center py-5">
+                <i class="bi bi-emoji-frown display-1 text-muted opacity-25"></i>
+                <h3 class="text-muted mt-3">No hay reportes.</h3>
             </div>
-        {% empty %}
-            <p style="text-align: center; grid-column: 1/-1;">No hay reportes publicados en este momento.</p>
         {% endfor %}
     </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.getElementById('petSearch').addEventListener('input', function(e) {
+        let filter = e.target.value.toLowerCase();
+        let items = document.querySelectorAll('.pet-item');
+        
+        items.forEach(function(item) {
+            let name = item.querySelector('.pet-name').innerText.toLowerCase();
+            let info = item.querySelector('.pet-info').innerText.toLowerCase();
+            
+            if (name.includes(filter) || info.includes(filter)) {
+                item.style.display = "";
+            } else {
+                item.style.display = "none";
+            }
+        });
+    });
+</script>
 {% endblock %}
